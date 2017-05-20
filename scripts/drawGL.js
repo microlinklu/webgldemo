@@ -22,6 +22,7 @@ function  initMartics(canvas){//初始化矩阵
 
     projectionMatrix=mat4.create();
     mat4.perspective(projectionMatrix,Math.PI/4,canvas.width/canvas.height,1,1000);
+
     rotateAxis=vec3.create();
     vec3.normalize(rotateAxis,[1,0,0]);
 }
@@ -186,6 +187,7 @@ function rotCube(gl,cube){
     });
     draw(gl,cube);
     animate();
+
 }
 function draw(gl,obj){
     gl.clearColor(0.0,0.0,0.0,1.0);
@@ -202,6 +204,7 @@ function draw(gl,obj){
     //gl.drawArrays(obj.primtype,0,obj.nVerts);
     gl.drawElements(obj.primtype,obj.nIndices,gl.UNSIGNED_SHORT,0);
 }
+var cont;
 $(document).ready(
     function(){
         var canvas=document.getElementById('webgl');
@@ -213,6 +216,10 @@ $(document).ready(
         initShader(gl);
       //  draw(gl,cube);
         rotCube(gl,cube);
+        var can1=document.getElementById('can');
+         cont=can1.getContext('2d');
+        cont.fillStyle = "#ff0000";
+        cont.fillRect(0,0,100,200);
     }
 )
 
