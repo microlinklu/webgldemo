@@ -15,7 +15,7 @@ $(function(){
     var renderer=new THREE.WebGLRenderer();
     //设置窗口大小
     renderer.setSize(window.innerWidth,window.innerHeight);
-    var stero=new THREE.StereoCamera();
+  //  var stero=new THREE.StereoCamera();
     //将渲染器添加到body中
     document.body.appendChild(renderer.domElement);
     var geometry=new THREE.BoxGeometry(3,3,3);
@@ -34,17 +34,18 @@ $(function(){
     //添加环境光
     //var ambiLight = new THREE.AmbientLight(0xffffff);
     //scene.add(ambiLight);
-    var pointLight=new THREE.PointLight(0xff0000,2.0);
+    var pointLight=new THREE.PointLight(0xffffff,1.0);
     pointLight.decay=100;
     pointLight.position.set(1,1,8);
     scene.add(pointLight);
     var listen=new THREE.AudioListener();
     var sound=new THREE.Audio(listen);
     var audio=new THREE.AudioLoader().load('sound/song.mp3',function(buffer){
-        sound.setBuffer(buffer)
+        sound.setBuffer(buffer);
         sound.setVolume(0.5);
       sound.play();
     });
+    cube2.add(sound);
   //  camera.position.y=4;
   //  var target=new THREE.Vector3(0.0,0.0,0.0)
   //  camera.lookAt(target);
@@ -56,8 +57,9 @@ $(function(){
     function run(){
         requestAnimationFrame(run);
       //  cube.rotation.y+=0.1;
-     //   renderer.render(scene,camera);
-          renderer.render(scene,stero);
+        pointLight.position.y+=0.2;
+        renderer.render(scene,camera);
+          //renderer.render(scene,stero);
 
     }
     run();
@@ -84,10 +86,11 @@ $(function(){
 
     }
     window.onmousemove=function(e){
-      //  target.x= e.clientX-window.innerWidth/2;
-     //   target.y= e.clientY-window.innerHeight/2;
+       // target.x= e.clientX-window.innerWidth/2;
+       // target.y= e.clientY-window.innerHeight/2;
       //  camera.lookAt(target)
-
+     //     pointLight.position.x=target.x;
+     //     pointLight.position.y=target.y;
         var v_mouse=new THREE.Vector3((e.clientX/window.innerWidth*2)-1,-(e.clientY/window.innerHeight)*2+1,0.5);
         v_mouse.unproject(camera);
         var rayCaster=new THREE.Raycaster(camera.position,v_mouse.sub(camera.position).normalize());
