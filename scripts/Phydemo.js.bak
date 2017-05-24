@@ -2,15 +2,15 @@
  * Created by luwen on 2017/5/23.
  */
 'use strict';
-    Physijs.scripts.worker='libs/physijs_worker.js';
-    Physijs.scripts.ammo='ammo.js';
-var scene,camera,light,renderer,render_stats,render;
+    Physijs.scripts.worker='../libs/physijs_worker.js';
+    Physijs.scripts.ammo='../libs/ammo.js';
+var scene,camera,light,renderer,render_stats;
 
  var init=function() {
      renderer = new THREE.WebGLRenderer({antialias:true});
      renderer.setSize(window.innerWidth, window.innerHeight);
      document.getElementById('aaa').appendChild(renderer.domElement);
-     scene = new Physijs.Scene();
+     scene = new Physijs.Scene;
      scene.setGravity(new THREE.Vector3(0, -50, 0));
      camera = new THREE.PerspectiveCamera(50,
          window.innerWidth / window.innerHeight, 1, 1000);
@@ -25,16 +25,15 @@ var scene,camera,light,renderer,render_stats,render;
      render_stats=new Stats();
      var points= getPoints();
      var stones=[];
-     requestAnimationFrame(render);
+     requestAnimationFrame(render1);
      createStones();
 
      function createStones(){
          points.forEach(function(point){
              var stoneGeo=new THREE.BoxGeometry(0.6,6,2);
-             var stone=new Physijs.BoxMesh(stoneGeo, new Physijs.createMaterial(new THREE.MeshPhongMaterial({
+             var stone=new Physijs.BoxMesh(stoneGeo,Physijs.createMaterial(new THREE.MeshPhongMaterial({
                  map:new THREE.TextureLoader().load('img/crate.gif')
-
-             })),1);
+             })));
              stone.position.copy(point);
              stone.lookAt(scene.position);
              stone.__dirtyRotation=true;
@@ -45,15 +44,13 @@ var scene,camera,light,renderer,render_stats,render;
          stones[0].rotation.x=0.2;
          stones[0].__dirtyRotation=true;
      }
-    // scene.simulate();
-
  }
-var timeStep;
-      render=function() {
-         requestAnimationFrame(render);
+     var render1=function() {
+         requestAnimationFrame(render1);
          renderer.render(scene, camera);
-       //  render_stats.update();
-        scene.simulate(undefined,1)
+         render_stats.update();
+         scene.simulate(undefined, 1);
+
      }
 
 

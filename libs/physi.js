@@ -915,7 +915,6 @@ window.Physijs = (function() {
 
 	Physijs.Scene.prototype.simulate = function( timeStep, maxSubSteps ) {
 		var object_id, object, update;
-
 		if ( _is_simulating ) {
 			return false;
 		}
